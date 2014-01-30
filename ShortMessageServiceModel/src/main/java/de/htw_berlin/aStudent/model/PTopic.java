@@ -71,4 +71,9 @@ public class PTopic extends AbstractModel<PTopic, Long> {
 	public void setUser(PUser user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }

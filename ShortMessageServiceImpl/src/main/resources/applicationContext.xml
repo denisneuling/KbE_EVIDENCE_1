@@ -17,6 +17,7 @@
 		<property name="customConverters">
 			<list>
 			    <bean id="TopicMapper" class="de.htw_berlin.aStudent.map.TopicMapper"/>
+  			    <bean id="MessageMapper" class="de.htw_berlin.aStudent.map.MessageMapper"/>
 			</list>
 		</property>
     </bean>

@@ -1,5 +1,9 @@
 package de.htw_berlin.aStudent.service.impl;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
+
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -7,7 +11,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -15,9 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
 import de.htw_berlin.aStudent.dao.PMessageDao;
 import de.htw_berlin.aStudent.model.PMessage;
 import de.htw_berlin.aStudent.model.PTopic;
@@ -41,7 +41,8 @@ public class PMessageServiceTest {
 	
 	String topic = "the holy grale";
 	List<PMessage> values;
-	int max = 100;
+	int max = 2;
+	Date median = null; 
 	
 	@Before
 	public void setUp(){
@@ -52,7 +53,8 @@ public class PMessageServiceTest {
 			PMessage m = new PMessage();
 			m.setTopic(top);
 			m.setOrigin(i <= 0);
-			m.setDate(randomDate());
+			Date date = randomDate();
+			m.setDate(date);
 			values.add(m);
 		}
 		
@@ -63,13 +65,11 @@ public class PMessageServiceTest {
 		when(messageDao.findMessagesByTopicSince(eq(topic), any(Date.class))).thenReturn(values);
 	}
 	
-	@Ignore
 	@Test
 	public void getMessageByTopic_allTest(){
 		Assert.assertEquals(max, size(pMessageService.getMessageByTopic(topic, new Date())));
 	}
 	
-	@Ignore
 	@Test
 	public void getMessageByTopic(){
 		pMessageService.getMessageByTopic(topic, new Date());

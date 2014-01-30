@@ -77,4 +77,11 @@ public class PUser extends AbstractModel<PUser, Long> {
 	public void setMessages(List<PMessage> messages) {
 		this.messages = messages;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	
 }

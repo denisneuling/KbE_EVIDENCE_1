@@ -65,4 +65,11 @@ public class Message {
 
 	private Long messageId;
 
+	@Override
+	public String toString() {
+		return "Message [date=" + date + ", content=" + content + ", topic=" + topic + ", user=" + user + ", origin=" + origin + ", messageId=" + messageId + "]";
+	}
+	
+	
+
 }

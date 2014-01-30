@@ -63,36 +63,49 @@ public class ShortMessageServiceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void createMessag_IllegalArgumentExceptione_Message_too_long() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		shortMessageService.createMessage(validUserName, messageTooLong, topicValid);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void createMessag_IllegalArgumentExceptione_Message_too_short() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		shortMessageService.createMessage(validUserName, messageTooShort, topicValid);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void createMessag_IllegalArgumentExceptione_User_not_found() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		Assert.assertNotNull(shortMessageService.createMessage(validUserName, messageValid, topicValid));
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void createMessage_NullPointerException_Username_Null() {
+		shortMessageService.createTopic(validUserName, topicValid);
 		shortMessageService.createMessage(null, messageValid, topicValid);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void createMessage_NullPointerException_Message_Null() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		shortMessageService.createMessage(validUserName, null, topicValid);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void createMessage_NullPointerException_Topic_Null() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		shortMessageService.createMessage(validUserName, messageValid, null);
 	}
 
 	@Test
 	public void createMessage() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		Long id = shortMessageService.createMessage(validUserName, messageValid, topicValid);
 
 		Assert.assertNotNull(id);
@@ -101,11 +114,15 @@ public class ShortMessageServiceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void respondToMessage_IllegalArgumentException_Message_too_long() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		shortMessageService.respondToMessage(validUserName, messageTooLong, predecessorValid);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void respondToMessage_IllegalArgumentException_Message_too_short() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		shortMessageService.respondToMessage(validUserName, messageTooShort, predecessorValid);
 	}
 
@@ -116,11 +133,13 @@ public class ShortMessageServiceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void respondToMessage_IllegalArgumentException_Predecessor_not_found() {
+		shortMessageService.createUser(validUserName, validCity);
 		shortMessageService.respondToMessage(validUserName, messageValid, predecessorInvalid);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void respondToMessage_IllegalArgumentException_Predecessor_not_origin() {
+		shortMessageService.createUser(validUserName, validCity);
 		shortMessageService.respondToMessage(validUserName, messageValid, predecessorNotOrigin);
 	}
 
@@ -131,16 +150,20 @@ public class ShortMessageServiceTest {
 
 	@Test(expected = NullPointerException.class)
 	public void respondToMessage_NullPointerException_Message_is_null() {
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicValid);
 		shortMessageService.createMessage(validUserName, null, topicValid);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void respondToMessage_NullPointerException_Predecessor_is_null() {
+		shortMessageService.createUser(validUserName, validCity);
 		shortMessageService.createMessage(validUserName, messageValid, null);
 	}
 
 	@Test
 	public void respondToMessage() {
+		shortMessageService.createUser(validUserName, validCity);
 		Long id = shortMessageService.respondToMessage(validUserName, messageValid, predecessorValid);
 
 		Assert.assertNotNull(id);
@@ -149,11 +172,13 @@ public class ShortMessageServiceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deleteMessage_IllegalArgumentException_Message_not_exist() throws AuthorizationException {
+		shortMessageService.createUser(validUserName, validCity);
 		shortMessageService.deleteMessage(usernameValid, messageIdInvalid);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deleteMessage_IllegalArgumentException_Message_not_origin() throws AuthorizationException {
+		shortMessageService.createUser(validUserName, validCity);
 		shortMessageService.deleteMessage(usernameValid, messageIdNotOrigin);
 	}
 
@@ -169,16 +194,20 @@ public class ShortMessageServiceTest {
 
 	@Test(expected = NullPointerException.class)
 	public void deleteMessage_NullPointerException_MessageId_is_null() throws AuthorizationException {
+		shortMessageService.createUser(validUserName, validCity);
 		shortMessageService.deleteMessage(usernameValid, null);
 	}
 
 	@Test(expected = AuthorizationException.class)
 	public void deleteMessage_AuthorizationException_User_not_authorized() throws AuthorizationException {
+		shortMessageService.createUser(usernameNotAuthorized, validCity);
 		shortMessageService.deleteMessage(usernameNotAuthorized, messageId);
 	}
 
 	@Test
 	public void deleteMessage() throws AuthorizationException {
+		shortMessageService.createUser(validUserName, validCity);
+		messageId = shortMessageService.createMessage(validUserName, messageValid, topicValid);
 		shortMessageService.deleteMessage(usernameExists, messageId);
 	}
 
@@ -189,16 +218,20 @@ public class ShortMessageServiceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void createTopic_IllegalArgumentException_Topic_exists() {
-		shortMessageService.createTopic(usernameExists, topicExists);
+		shortMessageService.createUser(validUserName, validCity);
+		shortMessageService.createTopic(validUserName, topicExists);
+		shortMessageService.createTopic(validUserName, topicExists);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void createTopic_IllegalArgumentException_Topic_too_short() {
+		shortMessageService.createUser(usernameExists, validCity);
 		shortMessageService.createTopic(usernameExists, topicTooShort);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void createTopic_IllegalArgumentException_Topic_too_long() {
+		shortMessageService.createUser(usernameExists, validCity);
 		shortMessageService.createTopic(usernameExists, topicTooLong);
 	}
 
@@ -214,6 +247,7 @@ public class ShortMessageServiceTest {
 
 	@Test
 	public void createTopic() {
+		shortMessageService.createUser(usernameExists, validCity);
 		shortMessageService.createTopic(usernameExists, topicValid);
 	}
 
@@ -239,6 +273,7 @@ public class ShortMessageServiceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void createUser_IllegalArgumentException_User_exists() {
+		shortMessageService.createUser(usernameExists, validCity);
 		shortMessageService.createUser(usernameExists, validCity);
 	}
 

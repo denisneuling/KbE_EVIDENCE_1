@@ -133,18 +133,14 @@ public class PMessageServiceImpl implements PMessageService{
 		List<PMessage> inner = null;
 		Calendar c = Calendar.getInstance();
 		
-		boolean init = true;
 		for(PMessage message : pMessages){
-			if(inner != null && c.after(message.getDate())){
-				inner.add(message);
-			}else{
-				if(init && inner!=null){
-					outer.add(inner);
-					init = false;
-				}
+			if(inner == null){
 				inner = new LinkedList<PMessage>();
+				inner.add(message);
 				outer.add(inner);
-				
+			} else if(c.after(message.getDate())){
+				inner.add(message);
+			} else{
 				c.setTime(message.getDate());
 				c.add(Calendar.DAY_OF_YEAR, 1);
 				Calendar.getInstance().set(Calendar.MINUTE, 0);
