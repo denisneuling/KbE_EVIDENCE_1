@@ -121,8 +121,4 @@ public class PMessage extends AbstractModel<PMessage, Long> {
 	public PMessage getSuccessor() {
 		return successor;
 	}
-
-	public void setSuccessor(PMessage successor) {
-		this.successor = successor;
-	}
 }

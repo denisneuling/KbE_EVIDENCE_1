@@ -21,6 +21,7 @@ public class MessageMapper implements CustomConverter {
 			message.setMessageId(m.getId());
 			message.setContent(m.getContent());
 			message.setDate(m.getDate());
+			
 			if(m.getTopic() != null)
 				message.setTopic(m.getTopic().getName());
 			

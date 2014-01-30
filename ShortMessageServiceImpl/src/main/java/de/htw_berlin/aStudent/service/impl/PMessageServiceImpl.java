@@ -44,9 +44,10 @@ public class PMessageServiceImpl implements PMessageService{
 		
 		PMessage pMessage = new PMessage();
 		pMessage.setUser(user);
+		pMessage.setTopic(ptopic);
+		
 		pMessage.setOrigin(true);
 		pMessage.setDate(new Date());
-		pMessage.setTopic(ptopic);
 		
 		messageDao.save(pMessage);
 		
@@ -74,6 +75,7 @@ public class PMessageServiceImpl implements PMessageService{
 		newMessage.setPredecessor(predecessorMessage);
 		newMessage.setContent(message);
 		newMessage.setDate(new Date());
+		
 		newMessage.setUser(user);
 		newMessage.setTopic(predecessorMessage.getTopic());
 		

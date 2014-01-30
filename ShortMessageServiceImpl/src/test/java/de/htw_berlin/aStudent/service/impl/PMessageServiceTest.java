@@ -72,7 +72,7 @@ public class PMessageServiceTest {
 	
 	@Test
 	public void getMessageByTopic(){
-		pMessageService.getMessageByTopic(topic, new Date());
+		Assert.assertEquals(0, size(pMessageService.getMessageByTopic(topic, new Date())));
 	}
 	
 	private int size(List<List<PMessage>> values){
@@ -86,10 +86,9 @@ public class PMessageServiceTest {
 	private Date randomDate(){
 		int year = randBetween(2012, 2014);
         int month = randBetween(0, 11);
-        int hour = randBetween(0, 24); //Hours will be displayed in between 9 to 22
+        int hour = randBetween(0, 23); 
         int min = randBetween(0, 59);
         int sec = randBetween(0, 59);
-
 
         GregorianCalendar gc = new GregorianCalendar(year, month, 1);
         int day = randBetween(1, gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
