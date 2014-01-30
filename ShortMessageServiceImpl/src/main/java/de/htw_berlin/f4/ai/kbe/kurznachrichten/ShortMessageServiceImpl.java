@@ -7,6 +7,7 @@ import java.util.Set;
 import org.dozer.DozerBeanMapper;
 import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.htw_berlin.aStudent.service.PMessageService;
 import de.htw_berlin.aStudent.service.PTopicService;
@@ -14,6 +15,7 @@ import de.htw_berlin.aStudent.service.PUserService;
 import de.htw_berlin.aStudent.util.PojoMapperUtil;
 
 @Service
+@Transactional
 public class ShortMessageServiceImpl implements ShortMessageService {
 
 	@Autowired
