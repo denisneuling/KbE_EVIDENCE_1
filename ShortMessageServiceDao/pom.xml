@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.htw_berlin.f4.ai.kbe</groupId>
+		<artifactId>kbe-parent</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>ShortMessageServiceDao</artifactId>
+	<name>${project.artifactId}</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.htw_berlin.f4.ai.kbe</groupId>
+			<artifactId>ShortMessageServiceModel</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+
+		<!-- DB migration -->
+		<dependency>
+			<groupId>com.googlecode.flyway</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${org.hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${org.hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${org.hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${org.hibernate.version}</version>
+		</dependency>
+
+		<!-- Default Bean Validation JSR303 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${org.hibernate.validator.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.web</groupId>
+					<artifactId>javax.el</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Driver Persistence -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.postgresql.version}</version>
+		</dependency>
+
+		<!-- integration tests -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${org.hsqldb.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib.version}</version>
+		</dependency>
+
+		<!-- C3P0 -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${c3p0.version}</version>
+		</dependency>
+
+		<!-- Spring annotations -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>

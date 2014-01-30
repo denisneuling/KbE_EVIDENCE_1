@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+							http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+							http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${dataSource.driverClass}" />
+		<property name="jdbcUrl" value="${datasource.jdbc.url}" />
+		<property name="user" value="${dataSource.user}" />
+		<property name="password" value="${dataSource.password}" />
+
+		<property name="minPoolSize" value="${dataSource.minPoolSize}" />
+		<property name="maxPoolSize" value="${dataSource.maxPoolSize}" />
+		<property name="acquireRetryAttempts" value="${dataSource.acquireRetryAttempts}" />
+		<property name="acquireIncrement" value="${dataSource.acquireIncrement}" />
+		<property name="maxStatements" value="${dataSource.maxStatements}" />
+		<property name="checkoutTimeout" value="${dataSource.checkoutTimeout}" />
+		<property name="initialPoolSize" value="${dataSource.initialPoolSize}" />
+		<property name="maxIdleTime" value="${dataSource.maxIdleTime}" />
+		<property name="idleConnectionTestPeriod" value="${dataSource.idleConnectionTestPeriod}" />
+		<property name="preferredTestQuery" value="${dataSource.preferredTestQuery}" />
+		<property name="unreturnedConnectionTimeout" value="${dataSource.unreturnedConnectionTimeout}" />
+		<property name="debugUnreturnedConnectionStackTraces" value="${dataSource.debugUnreturnedConnectionStackTraces}" />
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="${dataSource.sessionFactory.packagesToScan}" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${dataSource.hibernate.dialect}</prop>
+				<prop key="hibernate.connection.CharSet">utf8</prop>
+				<prop key="connection.autocommit">${dataSource.connection.autocommit}</prop>
+				<prop key="hibernate.jdbc.batch_size">${dataSource.hibernate.jdbc.batch_size}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${dataSource.hibernate.hbm2ddl.auto}</prop>
+<!-- 				<prop key="hibernate.show_sql">${dataSource.hibernate.show.sql}</prop> -->
+				<prop key="hibernate.bytecode.provider">${dataSource.hibernate.bytecode.provider}</prop>
+				
+	           	<prop key="hibernate.connection.useUnicode">true</prop>
+            	<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+            	<prop key="hibernate.connection.charSet">UTF-8</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+</beans>
