@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -24,6 +25,7 @@ import de.htw_berlin.aStudent.model.PTopic;
 import de.htw_berlin.aStudent.service.PTopicService;
 import de.htw_berlin.aStudent.service.PUserService;
 
+@Ignore
 @RunWith(BlockJUnit4ClassRunner.class)
 public class PMessageServiceTest {
 

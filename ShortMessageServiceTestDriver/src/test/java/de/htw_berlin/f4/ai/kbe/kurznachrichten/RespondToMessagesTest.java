@@ -116,13 +116,6 @@ public class RespondToMessagesTest extends TestMessageInit{
 		
 		List<List<Message>> messages = shortMessageService.getMessageByTopic(topic, null);
 		
-		for(List<Message> msgs : messages){
-		for(Message m  : msgs){
-			System.out.println(m);
-		}
-		System.out.println("###########################");
-		}
-		
 		assertEquals(2, messages.size());	
 		assertEquals(4, messages.get(0).size());
 		assertEquals(3, messages.get(1).size());
@@ -139,8 +132,5 @@ public class RespondToMessagesTest extends TestMessageInit{
 		messages = shortMessageService.getMessageByTopic(topic, d);
 		assertEquals(1, messages.size());	
 		assertEquals(3, messages.get(0).size());
-		
 	}
-	
-	
 }

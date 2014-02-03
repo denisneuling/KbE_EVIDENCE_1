@@ -2,6 +2,7 @@ package de.htw_berlin.aStudent.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class PMessageServiceImpl implements PMessageService{
 		PMessage pMessage = new PMessage();
 		pMessage.setUser(user);
 		pMessage.setTopic(ptopic);
+		pMessage.setContent(message);
 		
 		pMessage.setOrigin(true);
 		pMessage.setDate(new Date());
@@ -73,6 +75,12 @@ public class PMessageServiceImpl implements PMessageService{
 		
 		PMessage newMessage = new PMessage();
 		newMessage.setPredecessor(predecessorMessage);
+		if(predecessorMessage.isOrigin()){
+			newMessage.setOriginMesssage(predecessorMessage);
+		}else{
+			newMessage.setOriginMesssage(predecessorMessage.getOriginMesssage());
+		}
+		
 		newMessage.setContent(message);
 		newMessage.setDate(new Date());
 		
@@ -132,25 +140,24 @@ public class PMessageServiceImpl implements PMessageService{
 			return outer;
 		}
 		
-		List<PMessage> inner = null;
-		Calendar c = Calendar.getInstance();
+		HashMap<PMessage, List<PMessage>> msgs = new HashMap<PMessage, List<PMessage>>();
 		
-		for(PMessage message : pMessages){
-			if(inner == null){
-				inner = new LinkedList<PMessage>();
-				inner.add(message);
-				outer.add(inner);
-			} else if(c.after(message.getDate())){
-				inner.add(message);
-			} else{
-				c.setTime(message.getDate());
-				c.add(Calendar.DAY_OF_YEAR, 1);
-				Calendar.getInstance().set(Calendar.MINUTE, 0);
-				Calendar.getInstance().set(Calendar.HOUR, 0);
-				Calendar.getInstance().set(Calendar.SECOND, 0);
-				
-				inner.add(message);
+		
+		for(PMessage m : pMessages){
+			if(m.isOrigin()){
+				List<PMessage> ms = new LinkedList<PMessage>();
+				ms.add(m);
+				msgs.put(m, ms);
+			}else{
+				List<PMessage> refs = msgs.get(m.getOriginMesssage());
+				if(refs != null){
+					refs.add(m);
+				}
 			}
+		}
+		
+		for(List<PMessage> list : msgs.values()){
+			outer.add(list);
 		}
 		
 		return outer;

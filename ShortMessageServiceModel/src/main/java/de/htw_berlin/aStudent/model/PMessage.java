@@ -51,6 +51,9 @@ public class PMessage extends AbstractModel<PMessage, Long> {
 	@Column
 	@Mapping("origin")
 	private boolean origin = false;
+
+	@OneToOne
+	private PMessage originMesssage;
 	
 	@OneToOne
 	private PMessage predecessor;
@@ -120,5 +123,17 @@ public class PMessage extends AbstractModel<PMessage, Long> {
 
 	public PMessage getSuccessor() {
 		return successor;
+	}
+
+	public PMessage getOriginMesssage() {
+		return originMesssage;
+	}
+
+	public void setOriginMesssage(PMessage originMesssage) {
+		this.originMesssage = originMesssage;
+	}
+
+	public void setSuccessor(PMessage successor) {
+		this.successor = successor;
 	}
 }

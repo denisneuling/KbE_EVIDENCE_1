@@ -1,6 +1,7 @@
 package de.htw_berlin.f4.ai.kbe.kurznachrichten;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.htw_berlin.aStudent.model.PTopic;
 import de.htw_berlin.aStudent.service.PMessageService;
 import de.htw_berlin.aStudent.service.PTopicService;
 import de.htw_berlin.aStudent.service.PUserService;
@@ -20,85 +22,92 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 
 	@Autowired
 	private DozerBeanMapper dozerBeanMapper;
-	
+
 	@Autowired
 	private PUserService pUserService;
-	
+
 	@Autowired
 	private PMessageService pMessageService;
-	
+
 	@Autowired
 	private PTopicService pTopicService;
-	
+
 	@Override
 	public Long createMessage(String userName, String message, String topic) {
-		if(userName == null || message == null || topic == null){
+		if (userName == null || message == null || topic == null) {
 			throw new NullPointerException("Argument is null");
 		}
-		
-		if(message.length() > 255 ){
+
+		if (message.length() > 255) {
 			throw new IllegalArgumentException("Message too long");
 		}
-		
-		if(message.length() < 10 ){
+
+		if (message.length() < 10) {
 			throw new IllegalArgumentException("Message too short");
 		}
-		
+
 		return pMessageService.createMessage(userName, message, topic);
 	}
 
 	@Override
 	public Long respondToMessage(String userName, String message, Long predecessor) {
-		if(userName == null || message == null || predecessor == null){
+		if (userName == null || message == null || predecessor == null) {
 			throw new NullPointerException("Argument is null");
 		}
-		
-		if(message.length() > 255 ){
+
+		if (message.length() > 255) {
 			throw new IllegalArgumentException("Message too long");
 		}
 
-		if(message.length() < 10 ){
+		if (message.length() < 10) {
 			throw new IllegalArgumentException("Message too short");
 		}
-		
-		
+
 		return pMessageService.respondToMessage(userName, message, predecessor);
 	}
 
 	@Override
 	public void deleteMessage(String userName, Long messageId) throws AuthorizationException {
-		if(userName == null || messageId == null){
+		if (userName == null || messageId == null) {
 			throw new NullPointerException("Argument is null");
 		}
-		
+
 		pMessageService.deleteMessage(userName, messageId);
 	}
 
 	@Override
 	public void createTopic(String userName, String topic) {
-		if(topic == null || userName == null){
+		if (topic == null || userName == null) {
 			throw new NullPointerException("Argument was null");
 		}
-		
-		if(topic.length() < 2){
+
+		if (topic.length() < 2) {
 			throw new IllegalArgumentException("Topic too short");
 		}
-		
-		if(topic.length() > 70){
+
+		if (topic.length() > 70) {
 			throw new IllegalArgumentException("Topic too long");
 		}
-		
+
 		pTopicService.createTopic(userName, topic);
 	}
-	
+
 	@Override
 	public Set<String> getTopics() {
-		return PojoMapperUtil.mapSet(dozerBeanMapper, pTopicService.all(), String.class);
+		return mapPTopic(pTopicService.all());
+	}
+
+	private Set<String> mapPTopic(List<PTopic> topics) {
+		Set<String> dest = new HashSet<String>();
+		for (PTopic element : topics) {
+			dest.add(element.getName());
+		}
+		return dest;
 	}
 
 	@Override
 	public List<List<Message>> getMessageByTopic(String topic, Date since) {
-		if(topic == null){
+		if (topic == null) {
 			throw new NullPointerException("Topic was not set");
 		}
 
@@ -107,18 +116,18 @@ public class ShortMessageServiceImpl implements ShortMessageService {
 
 	@Override
 	public void createUser(String userName, String city) {
-		if(userName == null || city == null){
+		if (userName == null || city == null) {
 			throw new NullPointerException("Argument was null");
 		}
-		
-		if(userName.length() > 30){
+
+		if (userName.length() > 30) {
 			throw new IllegalArgumentException("Username too long");
 		}
-		
-		if(userName.length() < 4){
+
+		if (userName.length() < 4) {
 			throw new IllegalArgumentException("Username too short");
 		}
-		
+
 		pUserService.createUser(userName, city);
 	}
 

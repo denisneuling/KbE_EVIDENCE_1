@@ -47,7 +47,7 @@ public class PMessageDao extends AbstractDao<PMessage, Long> {
 							.where(
 								qpMessage.topic.name.eq(topic)
 							)
-							.orderBy(qpMessage.date.desc())
+							.orderBy(qpMessage.date.asc())
 							.list(qpMessage);
 			}
 		}.execute();
@@ -64,7 +64,7 @@ public class PMessageDao extends AbstractDao<PMessage, Long> {
 								qpMessage.topic.name.eq(topic)
 								.and(qpMessage.date.after(since))
 							)
-							.orderBy(qpMessage.date.desc())
+							.orderBy(qpMessage.date.asc())
 							.list(qpMessage);
 			}
 		}.execute();

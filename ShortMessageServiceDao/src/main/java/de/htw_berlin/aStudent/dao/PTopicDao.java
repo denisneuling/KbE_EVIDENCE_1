@@ -36,13 +36,14 @@ public class PTopicDao extends AbstractDao<PTopic, Long> {
 	}
 	
 	public List<PTopic> all() {
-		return new SelectQuery<List<PTopic>>(getSession()) {
+		List<PTopic> all = new SelectQuery<List<PTopic>>(getSession()) {
 			@Override
 			public List<PTopic> perform(HibernateQuery query) {
 				QPTopic qpTopic = QPTopic.pTopic;
 				return query.from(qpTopic).list(qpTopic);
 			}
 		}.execute();
+		return all;
 	}
 	
 	public PTopic findByName(final String name){

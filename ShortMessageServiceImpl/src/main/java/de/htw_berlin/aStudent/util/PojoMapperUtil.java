@@ -35,7 +35,7 @@ public class PojoMapperUtil {
 	}
 	
 	public static <T, U> Set<U> mapSet(final Mapper mapper, final List<T> source, final Class<U> destType) {
-	    final Set<U> dest = new HashSet<U>();
+	    Set<U> dest = new HashSet<U>();
 	    for (T element : source) {
 	        dest.add(mapper.map(element, destType));
 	    }

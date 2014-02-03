@@ -57,8 +57,5 @@ public class TopicTest extends TestUserInit{
 		Set<String> topics = shortMessageService.getTopics();
 		assertEquals(nbOfTopics+1, topics.size());
 		assertTrue(topics.contains(validTopic));
-		
 	}	 	
-	 
-	
 }
