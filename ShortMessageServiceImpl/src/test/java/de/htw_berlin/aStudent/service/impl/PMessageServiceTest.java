@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -25,7 +24,6 @@ import de.htw_berlin.aStudent.model.PTopic;
 import de.htw_berlin.aStudent.service.PTopicService;
 import de.htw_berlin.aStudent.service.PUserService;
 
-@Ignore
 @RunWith(BlockJUnit4ClassRunner.class)
 public class PMessageServiceTest {
 
@@ -41,43 +39,52 @@ public class PMessageServiceTest {
 	@Mock
 	private PTopicService pTopicService;
 	
-	String topic = "the holy grale";
-	List<PMessage> values;
-	int max = 2;
-	Date median = null; 
+	protected String topic = "the holy grale";
+	protected String anotherTopic = "42";
+	protected List<PMessage> values;
+	protected int max = 2;
 	
 	@Before
 	public void setUp(){
 		values = new LinkedList<PMessage>();
 		PTopic top = new PTopic();
+		PMessage origin = null;
 		top.setName(topic);
 		for(int i = 0 ; i < max ; i++){
 			PMessage m = new PMessage();
 			m.setTopic(top);
+			m.setOriginMesssage(origin);
 			m.setOrigin(i <= 0);
+			if(i <= 0){
+				origin = m;
+			}
 			Date date = randomDate();
 			m.setDate(date);
 			values.add(m);
 		}
 		
 		MockitoAnnotations.initMocks(this);
-		
+	}
+	
+	@Test
+	public void getMessageByTopic_all_msg_for_topic(){
 		when(pTopicService.findByName(topic)).thenReturn(new PTopic());
 		when(messageDao.findMessagesByTopic(topic)).thenReturn(values);
 		when(messageDao.findMessagesByTopicSince(eq(topic), any(Date.class))).thenReturn(values);
+		
+		Assert.assertEquals(2, size(pMessageService.getMessageByTopic(topic, new Date())));
 	}
 	
 	@Test
-	public void getMessageByTopic_allTest(){
-		Assert.assertEquals(max, size(pMessageService.getMessageByTopic(topic, new Date())));
+	public void getMessageByTopic_no_msgs_for_topic(){
+		when(pTopicService.findByName(anotherTopic)).thenReturn(new PTopic());
+		when(messageDao.findMessagesByTopic(topic)).thenReturn(values);
+		when(messageDao.findMessagesByTopicSince(eq(topic), any(Date.class))).thenReturn(values);
+		
+		Assert.assertEquals(0, size(pMessageService.getMessageByTopic(anotherTopic, new Date())));
 	}
 	
-	@Test
-	public void getMessageByTopic(){
-		Assert.assertEquals(0, size(pMessageService.getMessageByTopic(topic, new Date())));
-	}
-	
-	private int size(List<List<PMessage>> values){
+	protected int size(List<List<PMessage>> values){
 		int size = 0 ;
 		for(List<PMessage> inner : values){
 			size += inner.size();
@@ -85,7 +92,7 @@ public class PMessageServiceTest {
 		return size;
 	}
 	
-	private Date randomDate(){
+	protected Date randomDate(){
 		int year = randBetween(2012, 2014);
         int month = randBetween(0, 11);
         int hour = randBetween(0, 23); 
@@ -99,6 +106,7 @@ public class PMessageServiceTest {
 
         return gc.getTime();
 	}
+	
 	public static int randBetween(int start, int end) {
 		return start + (int)Math.round(Math.random() * (end - start));
 	}

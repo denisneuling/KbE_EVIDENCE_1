@@ -33,7 +33,7 @@
 				<prop key="connection.autocommit">${dataSource.connection.autocommit}</prop>
 				<prop key="hibernate.jdbc.batch_size">${dataSource.hibernate.jdbc.batch_size}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${dataSource.hibernate.hbm2ddl.auto}</prop>
-<!-- 				<prop key="hibernate.show_sql">${dataSource.hibernate.show.sql}</prop> -->
+				<prop key="hibernate.show_sql">${dataSource.hibernate.show.sql}</prop>
 				<prop key="hibernate.bytecode.provider">${dataSource.hibernate.bytecode.provider}</prop>
 				
 	           	<prop key="hibernate.connection.useUnicode">true</prop>

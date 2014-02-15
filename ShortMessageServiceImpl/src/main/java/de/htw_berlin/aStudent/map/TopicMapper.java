@@ -14,10 +14,10 @@ public class TopicMapper implements CustomConverter {
 		}
 
 		if (source instanceof PTopic) {
-			return ((PTopic)source).getName();
+			return ((PTopic) source).getName();
 		} else if (source instanceof String) {
 			PTopic pTopic = new PTopic();
-			pTopic.setName((String)source);
+			pTopic.setName((String) source);
 			return pTopic;
 		} else {
 			throw new MappingException("TopicMapper used incorrectly. Arguments passed in were:" + destClass.getName() + " and " + sourceClass.getName());

@@ -10,10 +10,10 @@ import de.htw_berlin.aStudent.model.PUser;
 public interface PUserService {
 
 	public PUser createUser(String userName, String city);
-	
+
 	public void deleteUser(String userName);
-	
+
 	public PUser findByUsername(String userName);
-	
+
 	public List<PUser> all();
 }

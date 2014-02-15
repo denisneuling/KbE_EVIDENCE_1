@@ -12,30 +12,30 @@ import de.htw_berlin.aStudent.service.PTopicService;
 import de.htw_berlin.aStudent.service.PUserService;
 
 @Service
-public class PTopicServiceImpl implements PTopicService{
+public class PTopicServiceImpl implements PTopicService {
 
 	@Autowired
 	private PTopicDao pTopicDao;
-	
+
 	@Autowired
 	private PUserService pUserService;
-	
+
 	@Override
 	public void createTopic(String userName, String topic) {
 		PTopic pTopic = pTopicDao.findByName(topic);
-		if(pTopic!=null){
+		if (pTopic != null) {
 			throw new IllegalArgumentException("Topic already exists");
 		}
-		
+
 		PUser user = pUserService.findByUsername(userName);
-		if(user == null){
+		if (user == null) {
 			throw new IllegalArgumentException("User does not exist");
 		}
-		
+
 		pTopic = new PTopic();
 		pTopic.setName(topic);
 		pTopic.setUser(user);
-		
+
 		pTopicDao.save(pTopic);
 	}
 

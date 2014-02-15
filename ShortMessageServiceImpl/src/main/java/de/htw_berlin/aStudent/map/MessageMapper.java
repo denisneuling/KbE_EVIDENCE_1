@@ -17,28 +17,28 @@ public class MessageMapper implements CustomConverter {
 
 		if (source instanceof PMessage) {
 			PMessage m = (PMessage) source;
-			Message message = new Message ();
+			Message message = new Message();
 			message.setMessageId(m.getId());
 			message.setContent(m.getContent());
 			message.setDate(m.getDate());
-			
-			if(m.getTopic() != null)
+
+			if (m.getTopic() != null)
 				message.setTopic(m.getTopic().getName());
-			
+
 			message.setOrigin(m.isOrigin());
-			
-			if(m.getUser() != null){
-				
+
+			if (m.getUser() != null) {
+
 				User u = new User();
 				u.setCity(m.getUser().getCity());
 				u.setName(m.getUser().getName());
-				
+
 				message.setUser(u);
 			}
 
 			return message;
 		}
-		
+
 		throw new MappingException("MessageMapper used incorrectly. Arguments passed in were:" + destClass.getName() + " and " + sourceClass.getName());
 	}
 

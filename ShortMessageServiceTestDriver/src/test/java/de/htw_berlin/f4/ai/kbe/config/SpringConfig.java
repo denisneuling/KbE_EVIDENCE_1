@@ -9,13 +9,12 @@ import de.htw_berlin.f4.ai.kbe.kurznachrichten.ShortMessageService;
 import de.htw_berlin.f4.ai.kbe.kurznachrichten.ShortMessageServiceImpl;
 
 @Configuration
-@Import(AppConfig.class) 
+@Import(AppConfig.class)
 public class SpringConfig {
 
 	@Bean
-	ShortMessageService shortMessageService(){
+	public ShortMessageService shortMessageService() {
 		return new ShortMessageServiceImpl();
 	}
-	
+
 }
- 

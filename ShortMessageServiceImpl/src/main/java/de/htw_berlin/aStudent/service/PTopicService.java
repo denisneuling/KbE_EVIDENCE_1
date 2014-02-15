@@ -12,6 +12,6 @@ public interface PTopicService {
 	public void createTopic(String userName, String topic);
 
 	public List<PTopic> all();
-	
+
 	public PTopic findByName(String name);
 }
